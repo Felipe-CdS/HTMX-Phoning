@@ -11,7 +11,7 @@ export const Layout = (props: { children: any }) => html`
       <title>Hono + htmx</title>
     </head>
     <body>
-      <div> 
+      <div class="p-2 flex flex-col" id="messages-home"> 
 		${props.children}
       </div>
     </body>
@@ -71,3 +71,63 @@ export function FormComponent() {
 			</form>
 		  );
 }
+
+export function MessageBubbleSingleRowComponent({message, time}: any) {
+	return(
+		<div class="self-start flex mb-2">
+
+			<div class="border border-black rounded-full w-5 h-5 mr-1">
+
+			</div>
+
+			<div class="flex items-end">
+				<div class="border rounded-r-xl rounded-b-xl border-black px-2 py-1 mr-1 bg-gradient-to-t from-green-400 via-green-400">
+					<span class="whitespace-pre-line text-base">{message} </span>
+				</div>
+				<span class="text-xs">{time} </span>
+			</div>
+		</div>
+	);
+}
+
+export function MessageBubbleDoubleRowComponent({messageKR, messageTrans, time}: any) {
+	return(
+		<div class="self-start flex flex-col mb-2">
+
+			<span class="text-sm ml-6">민지</span>
+
+			<div class="flex">
+				<div class="border border-black rounded-full w-5 h-5 mr-1">
+
+				</div>
+
+				<div class="flex items-end">
+
+						<div class="flex flex-col border rounded-r-xl rounded-b-xl border-black mr-1 bg-gradient-to-t from-green-400 via-green-400">
+							<span class="whitespace-pre-line text-base px-2 py-1">{messageKR} </span>
+							<hr class="border border-black border-opacity-50 border-dashed my-1"/>
+							<span class="whitespace-pre-line text-base px-2 py-1">{messageTrans} </span>
+						</div>
+					
+					<span class="text-xs">{time} </span>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+export function SendMessageBarComponent(){
+	return(
+		<div class="w-100 bg-yellow-300 p-2 border-t border-black">
+			<form class="inline-block px-3 py-1 border border-black rounded-full bg-white"
+					hx-post="/messages" hx-target="#messages-home" hx-swap="outerHTML">
+
+				<input class="mr-2 focus:outline-none" name="message-text-input"
+						type="text" placeholder="Enter a message.">
+				</input>
+				<button class="btn">Enviar</button>
+			</form>
+		</div>
+	)
+}
+
