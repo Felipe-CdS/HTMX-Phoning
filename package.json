@@ -6,7 +6,9 @@
     "start": "bun --watch run src/index.tsx"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.6"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
