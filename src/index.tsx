@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { serveStatic } from 'hono/bun'
 import {
     ButtonComponent,
     FormComponent,
@@ -15,13 +16,15 @@ import api from './routes'
 export const db = new MessagesDatabase()
 const app = new Hono()
 
+app.use('/assets/*', serveStatic({ root: './' }))
+
 app.get('/', async (c) => {
     const messages = await db.getAllMessages()
 
     return c.html(
         <Layout>
             <TopBarComponent />
-            <div class="h-full overflow-y-scroll bg-gradient-to-b from-yellow-300 via-white bg-scroll px-3">
+            <div class="h-[calc(100%-7rem)] overflow-y-scroll bg-gradient-to-b from-yellow-300 via-white to-white bg-scroll px-3">
                 {messages.map((i: any) => {
                     return (
                         <MessageBubbleSingleRowComponent
@@ -30,7 +33,6 @@ app.get('/', async (c) => {
                     )
                 })}
             </div>
-
             <SendMessageBarComponent />
             {/* <MessageBubbleSingleRowComponent message={"aaaasdasdjkasdha"} time={"00:47"}/>
 			<MessageBubbleSingleRowComponent message={"aaaa"} time={"00:47"}/>
