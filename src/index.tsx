@@ -1,17 +1,9 @@
 import { Hono } from 'hono'
 import { serveStatic } from 'hono/bun'
-import {
-    ButtonComponent,
-    FormComponent,
-    Layout,
-    MessageBubbleDoubleRowComponent,
-    MessageBubbleSingleRowComponent,
-    NavbarComponent,
-    SendMessageBarComponent,
-    TopBarComponent,
-} from './components'
-import { Message, MessagesDatabase } from './db'
+import { MessagesDatabase } from './db'
 import api from './routes'
+import SingleChat from './Views/SingleChat/SingleChat'
+import singleChatRoutes from './Views/SingleChat/routes'
 
 export const db = new MessagesDatabase()
 const app = new Hono()
@@ -21,32 +13,10 @@ app.use('/assets/*', serveStatic({ root: './' }))
 app.get('/', async (c) => {
     const messages = await db.getAllMessages()
 
-    return c.html(
-        <Layout>
-            <TopBarComponent />
-            <div class="h-[calc(100%-7rem)] overflow-y-scroll bg-gradient-to-b from-yellow-300 via-white to-white bg-scroll px-3">
-                {messages.map((i: any) => {
-                    return (
-                        <MessageBubbleSingleRowComponent
-                            message={i.message_kr}
-                        />
-                    )
-                })}
-            </div>
-            <SendMessageBarComponent />
-            {/* <MessageBubbleSingleRowComponent message={"aaaasdasdjkasdha"} time={"00:47"}/>
-			<MessageBubbleSingleRowComponent message={"aaaa"} time={"00:47"}/>
-			<MessageBubbleSingleRowComponent message={"bbbbbbbbbqweqwebbb \n asjdhsadkjhds"} time={"00:50"}/>
-			<MessageBubbleSingleRowComponent message={"안녕~~!"} time={"00:50"} />
-
-
-			<MessageBubbleDoubleRowComponent messageKR={"안녕~~!"} messageTrans={"Hiiii!"} time={"00:50"} />
-			<MessageBubbleDoubleRowComponent messageKR={"졸업식은 너무 짧았어ㅎㅎㅋㅋ"} messageTrans={"The graduation ceremony was too short hahaha"} time={"00:50"} />
-			<MessageBubbleDoubleRowComponent messageKR={"✨✨✨✨✨"} messageTrans={"✨✨✨✨✨"} time={"00:50"} /> */}
-        </Layout>
-    )
+    return c.html(<SingleChat messages={messages} />)
 })
 
 app.route('/', api)
+app.route('/single-chat', singleChatRoutes)
 
 export default app
