@@ -6,6 +6,14 @@ function BaseHTML(props: { children: any }) {
                 <script src="https://unpkg.com/htmx.org@1.9.3"></script>
                 <script src="https://unpkg.com/hyperscript.org@0.9.9"></script>
                 <script src="https://cdn.tailwindcss.com"></script>
+                <script
+                    type="module"
+                    src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"
+                ></script>
+                <script
+                    defer
+                    src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"
+                ></script>
                 <title>Phoning</title>
             </head>
             <body class="bg-red flex h-screen flex-col items-center bg-gradient-to-b from-blue-400 py-10">

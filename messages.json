@@ -1,10 +1,12 @@
 [
     {
+        "message_id": "",
         "member": "",
-        "KR": "",
-        "EN": "",
-        "BR": "",
-        "timestamp": null
-    },
-    {}
+        "sent_at": null
+        "message": {
+            "KR": "",
+            "EN": "",
+            "BR": ""
+        },
+    }
 ]
