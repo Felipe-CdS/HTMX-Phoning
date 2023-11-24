@@ -42,10 +42,10 @@ function ReplyTextInputForm(props: { message_id: string }) {
                 hx-put="/single-chat/put-translation"
                 hx-target="#send-msg-bar"
                 hx-swap="outerHTML"
-                class="mb-0 flex items-center justify-around px-2 py-2"
+                class="mb-0 flex w-full items-center justify-around px-2 py-2"
             >
                 <LanguageSelectorDiv selected="PT-BR" />
-                <div class="flex h-10 items-center rounded-full border border-black bg-white py-1 pl-1 pr-3">
+                <div class="flex h-10 w-full items-center rounded-full border border-black bg-white py-1 pl-1 pr-3">
                     <button
                         class="h-8 w-8 shrink-0 p-1.5 opacity-50"
                         hx-get="/single-chat/open-emoji-picker"
