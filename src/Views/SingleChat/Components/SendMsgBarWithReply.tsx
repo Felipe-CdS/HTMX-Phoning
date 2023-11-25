@@ -48,11 +48,11 @@ function ReplyTextInputForm(props: { message_id: string }) {
                 <div class="flex h-10 w-full items-center rounded-full border border-black bg-white py-1 pl-1 pr-3">
                     <button
                         class="h-8 w-8 shrink-0 p-1.5 opacity-50"
-                        hx-get="/single-chat/open-emoji-picker"
-                        hx-target="#emoji-picker-container"
-                        hx-swap="innerHTML"
+                        hx-get="/single-chat/emoji-picker/open"
+                        hx-target="#emoji_root"
+                        hx-swap="outerHTML"
                     >
-                        <img src="./assets/emoji-smile.svg"></img>
+                        <img src="./assets/emojis/smileys_emotion.svg"></img>
                     </button>
                     <input
                         class="w-10/12 focus:outline-none"

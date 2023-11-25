@@ -4,8 +4,11 @@ import { MessagesDatabase } from './db'
 import api from './routes'
 import SingleChat from './Views/SingleChat/SingleChat'
 import singleChatRoutes from './Views/SingleChat/routes'
+import { loadEmojisOnDisk } from './Views/SingleChat/Components/EmojiPicker'
 
+await loadEmojisOnDisk();
 export const db = new MessagesDatabase()
+
 const app = new Hono()
 
 app.use('/assets/*', serveStatic({ root: './' }))

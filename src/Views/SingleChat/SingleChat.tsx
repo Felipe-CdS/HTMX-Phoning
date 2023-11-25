@@ -13,6 +13,7 @@ function SingleChatView(props: { messages: any }) {
                 })}
             </div>
             <SendMsgBar />
+            <div id="emoji_root"></div>
             {/* <MessageBubbleSingleRowComponent message={"aaaasdasdjkasdha"} time={"00:47"}/>
 				<MessageBubbleSingleRowComponent message={"aaaa"} time={"00:47"}/>
 				<MessageBubbleSingleRowComponent message={"bbbbbbbbbqweqwebbb \n asjdhsadkjhds"} time={"00:50"}/>
