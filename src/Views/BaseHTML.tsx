@@ -21,8 +21,9 @@ function BaseHTML(props: { children: any }) {
                     src={foo}
                 ></img> */}
                 <div
-                    class="relative flex aspect-[9/19.5] h-full flex-col justify-between overflow-hidden rounded-3xl border-8 border-gray-700"
                     id="root"
+                    class="relative flex aspect-[9/19.5] h-full flex-col justify-between overflow-hidden rounded-3xl border-8 border-gray-700"
+                    x-data="{emojiPickerToggle: true, selectedCategory: 'smileys_emotion'}"
                 >
                     {props.children}
                 </div>

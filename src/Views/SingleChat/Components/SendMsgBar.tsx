@@ -21,15 +21,14 @@ function ReplyTextInputForm() {
             >
                 <div class="flex h-10 w-full items-center rounded-full border border-black bg-white py-1 pl-1 pr-3">
                     <button
-                        class="h-8 w-8 shrink-0 p-1.5 opacity-50"
-                        hx-get="/single-chat/emoji-picker/open"
-                        hx-target="#emoji_root"
-                        hx-swap="outerHTML"
+                        x-on:click="emojiPickerToggle = ! emojiPickerToggle"
+                        class="h-8 w-8 shrink-0 p-1.5 opacity-60 invert"
                     >
                         <img src="./assets/emojis/smileys_emotion.svg"></img>
                     </button>
                     <input
-                        class="focus:outline-none"
+                        id="message-text-input"
+                        class="w-full focus:outline-none"
                         name="message-text-input"
                         type="text"
                         autocomplete="off"

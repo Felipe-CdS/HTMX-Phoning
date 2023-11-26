@@ -1,61 +1,97 @@
-import { CategoriesDataArray, ICategory } from '../../../data/categories';
+import { CategoriesDataArray, ICategory } from '../../../data/categories'
 
 export function EmojiPicker() {
-
-    let emojisOnCategoryArray: any[] = (CategoriesDataArray
-        .find((elem) => elem.normalizedName == 'smileys_emotion') as ICategory).emojisOnCategory;
+    let emojisOnCategoryArray: any[] = (
+        CategoriesDataArray.find((elem) => elem.normalizedName == 'smileys_emotion') as ICategory
+    ).emojisOnCategory
 
     return (
-        <div class="bg-gray-800 max-h-96" id="emoji_root">
-            <div id="emoji_search"></div>
-            <div class="flex w-full justify-around p-3" id="emoji_categories">
+        <div id="emoji_root" class="max-h-96 bg-gray-800" x-show="emojiPickerToggle">
+            <div id="emoji_search" class="px-3 py-2">
+                <input
+                    type="text"
+                    placeholder="Search emojis"
+                    class="h-10 w-full rounded-full border border-gray-300 border-opacity-70 bg-transparent px-3 py-1 text-white focus:outline-none"
+                />
+            </div>
+            <div
+                id="emoji_categories"
+                class="flex w-full justify-around border-b border-gray-300 border-opacity-70 px-3 py-1"
+            >
                 {CategoriesDataArray.map((e: ICategory) => {
                     return (
                         <button
                             hx-get={`/single-chat/emoji-picker/change-category?selected=${e.normalizedName}`}
                             hx-swap="innerHTML"
                             hx-target="#emoji_list"
-                            class="w-1/12"
-                            onclick={`console.log('aaaa');`}
+                            x-on:click={`selectedCategory = "${e.normalizedName}"`}
+                            x-bind:class={`selectedCategory == "${e.normalizedName}" ?
+                                            "after:absolute after:h-1 after:-bottom-1 after:left-0 after:w-full after:bg-blue-400 after:rounded-xl" : 
+                                            ""`}
+                            class="relative w-1/12 p-1 hover:bg-blue-400 hover:bg-opacity-30 hover:transition-all hover:duration-300"
                             title={e.title}
                         >
-                            <img class="fill-white w-full" src={e.iconPath} />
+                            <img class="w-full fill-white" src={e.iconPath} />
                         </button>
-                    );
+                    )
                 })}
             </div>
-            <div id="emoji_list" class="p-3 grid gap-2 items-center justify-center grid-cols-6 max-h-96 overflow-y-scroll">
-                {
-                    emojisOnCategoryArray.map((elem) => {
-                        return (
-                            <button
-                                class={`place-self-center bg-[position:${-(elem.sheet_x * (32 + 2)) + 1}px_-${(elem.sheet_y * (32 + 2)) + 1}px] w-[34px] h-[34px]`}
-                                onclick={`console.log('aaaa');`}
-                                style="background-image:url(https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/sheets-clean/32.png)"
-                            />);
-                    })
-                }
+            <div
+                id="emoji_list"
+                class="grid max-h-96 grid-cols-6 items-center justify-center gap-2 overflow-y-scroll p-3"
+            >
+                {emojisOnCategoryArray.map((elem) => {
+                    return EmojiPickerButton(elem)
+                })}
             </div>
         </div>
     )
 }
 
-// This function prepares an static Array organized by categories and sorted on server start;
-export async function loadEmojisOnDisk() {
-    console.log("Loading emojis...");
-    //TODO: Check if the files are already in memory and skip this step;
-
-    var emojisJSON = JSON.parse(await Bun.file('./src/data/emojis.json').text());
-
-    for (let i = 0; i < CategoriesDataArray.length; i++) {
-        var category = CategoriesDataArray[i];
-        var holder: any[] = emojisJSON
-            .filter((e: any) => e.category == category.title && e.has_img_apple == true)
-            .sort((a: any, b: any) => a.sort_order - b.sort_order);
-
-        await Bun.write(`./assets/emojis/${category.normalizedName}.json`, JSON.stringify({ ...holder }));
-        category.emojisOnCategory = holder;
-    }
-    console.log("Emojis loaded. Starting server...");
+export function EmojiPickerButton(emoji: any) {
+    return (
+        <button
+            class={`h-[34px] w-[34px] place-self-center rounded-sm hover:bg-gray-500 hover:bg-opacity-50 hover:transition-all
+            bg-[position:${-(emoji.sheet_x * (32 + 2)) + 1}px_-${emoji.sheet_y * (32 + 2) + 1}px] `}
+            onclick={`document.getElementById("message-text-input").value += "${EmojiInputFormatter(
+                emoji.unified
+            )}";`}
+            style="background-image:url(https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/sheets-clean/32.png)"
+        />
+    )
 }
 
+function EmojiInputFormatter(unifiedCode: string) {
+    let splitSurrogatePairs = unifiedCode.split('-')
+    splitSurrogatePairs = splitSurrogatePairs.map((e) => {
+        e = '\\u{'.concat(e).concat('}')
+        return e
+    })
+    let returnHolder = ''
+    splitSurrogatePairs.map((e) => {
+        returnHolder = returnHolder.concat(e)
+    })
+    return returnHolder
+}
+
+// This function prepares an static Array organized by categories and sorted on server start;
+export async function loadEmojisOnDisk() {
+    console.log('Loading emojis...')
+    //TODO: Check if the files are already in memory and skip this step;
+
+    var emojisJSON = JSON.parse(await Bun.file('./src/data/emojis.json').text())
+
+    for (let i = 0; i < CategoriesDataArray.length; i++) {
+        var category = CategoriesDataArray[i]
+        var holder: any[] = emojisJSON
+            .filter((e: any) => e.category == category.title && e.has_img_apple == true)
+            .sort((a: any, b: any) => a.sort_order - b.sort_order)
+
+        await Bun.write(
+            `./assets/emojis/${category.normalizedName}.json`,
+            JSON.stringify({ ...holder })
+        )
+        category.emojisOnCategory = holder
+    }
+    console.log('Emojis loaded. Starting server...')
+}
