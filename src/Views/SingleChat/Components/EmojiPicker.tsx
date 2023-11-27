@@ -53,14 +53,23 @@ export function EmojiPickerButton(emoji: any) {
         <button
             class={`h-[34px] w-[34px] place-self-center rounded-sm hover:bg-gray-500 hover:bg-opacity-50 hover:transition-all
             bg-[position:${-(emoji.sheet_x * (32 + 2)) + 1}px_-${emoji.sheet_y * (32 + 2) + 1}px] `}
-            onclick={`document.getElementById("message-text-input").value += "${EmojiInputFormatter(
-                emoji.unified
-            )}";`}
             style="background-image:url(https://cdn.jsdelivr.net/npm/emoji-datasource-apple@15.0.1/img/apple/sheets-clean/32.png)"
+            onclick={`
+                let elem = document.getElementById("message-text-input");
+                let cursorPos = elem.selectionStart;
+                let textBefore = elem.value.substring(0, cursorPos);
+                let textAfter = elem.value.substring(cursorPos, elem.value.length);
+                elem.value = textBefore + "${EmojiInputFormatter(emoji.unified)}" + textAfter;
+                elem.setSelectionRange(cursorPos + 2, cursorPos + 2);
+            `}
         />
     )
 }
 
+// This function transforms the emoji from a cdn to a html pattern. Also works with emojis 
+// that need more than one unicode.
+// Example: 1FFF transforms to \u{1fff}
+// Exampl: 1FFF-2ABC transforms to \u{1fff}\u{2abc}
 function EmojiInputFormatter(unifiedCode: string) {
     let splitSurrogatePairs = unifiedCode.split('-')
     splitSurrogatePairs = splitSurrogatePairs.map((e) => {
