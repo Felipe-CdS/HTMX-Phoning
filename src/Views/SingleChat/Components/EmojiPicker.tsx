@@ -21,6 +21,7 @@ export function EmojiPicker() {
                 {CategoriesDataArray.map((e: ICategory) => {
                     return (
                         <button
+                            preload
                             hx-get={`/single-chat/emoji-picker/change-category?selected=${e.normalizedName}`}
                             hx-swap="innerHTML"
                             hx-target="#emoji_list"

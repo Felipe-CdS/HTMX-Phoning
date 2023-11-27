@@ -23,7 +23,7 @@ function BaseHTML(props: { children: any }) {
                 <div
                     id="root"
                     class="relative flex aspect-[9/19.5] h-full flex-col justify-between overflow-hidden rounded-3xl border-8 border-gray-700"
-                    x-data="{emojiPickerToggle: true, selectedCategory: 'smileys_emotion'}"
+                    x-data="{emojiPickerToggle: false, selectedCategory: 'smileys_emotion'}"
                 >
                     {props.children}
                 </div>
