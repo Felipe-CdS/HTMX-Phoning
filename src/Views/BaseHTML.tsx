@@ -15,7 +15,7 @@ function BaseHTML(props: { children: any }) {
                 ></script>
                 <title>Phoning</title>
             </head>
-            <body hx-ext="preload" class="bg-red flex h-screen flex-col items-center bg-gradient-to-b from-blue-400 py-10">
+            <body hx-ext="preload" class="bg-red flex h-[100dvh] flex-col items-center bg-gradient-to-b from-blue-400 py-10">
                 {/* <img
                     class="absolute left-1/2 top-1/2 z-10 aspect-[9/19.5] h-[calc(100%-3rem)] -translate-x-1/2 -translate-y-1/2"
                     src={foo}
