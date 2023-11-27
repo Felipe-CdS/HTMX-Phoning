@@ -8,7 +8,7 @@ function SingleChatView(props: { messages: any }) {
     return (
         <BaseHTML >
             <TopBar />
-            <div class="grow overflow-y-scroll bg-gradient-to-b from-yellow-300 via-white to-white bg-scroll px-3">
+            <div class="grow overflow-y-scroll bg-gradient-to-b from-yellow-300 via-white to-white bg-scroll px-5">
                 {props.messages.map((i: any) => {
                     return <SingleRowMsgBubble message={i.message_kr} time={'12:00'} />
                 })}

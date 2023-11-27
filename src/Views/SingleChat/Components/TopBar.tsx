@@ -1,6 +1,6 @@
 function TopBar() {
     return (
-        <div class="w-full bg-yellow-300 px-3 py-2">
+        <div class="w-full bg-yellow-300 px-5 pt-14 pb-1">
             <div class="mb-2 flex items-center self-start">
                 <div class="mr-5 h-6 w-6 rounded-full border border-black bg-white">
                     <span>&lt;</span>

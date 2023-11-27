@@ -14,7 +14,7 @@ function ReplyTextInputForm() {
     return (
         <div class="relative flex w-full flex-col items-center justify-center">
             <form
-                class="mb-0 flex w-full items-center justify-center px-2 py-2"
+                class="mb-0 flex w-full items-center justify-center px-5 pb-5 pt-2"
                 hx-post="/messages"
                 hx-target="#messages-home"
                 hx-swap="outerhtml"
