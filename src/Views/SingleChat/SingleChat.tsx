@@ -1,12 +1,13 @@
 import BaseHTML from '../BaseHTML'
 import { EmojiPicker } from './Components/EmojiPicker'
 import { SendMsgBar } from './Components/SendMsgBar'
+import { SettingsModal } from './Components/SettingsModal'
 import SingleRowMsgBubble from './Components/SingleRowMsgBubble'
 import TopBar from './Components/TopBar'
 
 function SingleChatView(props: { messages: any }) {
     return (
-        <BaseHTML >
+        <BaseHTML>
             <TopBar />
             <div class="grow overflow-y-scroll bg-gradient-to-b from-yellow-300 via-white to-white bg-scroll px-3">
                 {props.messages.map((i: any) => {
@@ -15,6 +16,7 @@ function SingleChatView(props: { messages: any }) {
             </div>
             <SendMsgBar />
             <EmojiPicker />
+            <div id="settings-modal-container" class="hidden" />
             {/*
             <div id="emoji_root" x-show="emoji-open"></div>
              <MessageBubbleSingleRowComponent message={"aaaasdasdjkasdha"} time={"00:47"}/>

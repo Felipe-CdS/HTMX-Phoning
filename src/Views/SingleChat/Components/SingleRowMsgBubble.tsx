@@ -19,7 +19,7 @@ function SingleRowMsgBubble({ message, time }: any) {
                     hx-vals={`"message_id": "1", "sender": "Minji", "message": "${message}"`}
                     class="h-6 w-6 rounded-full bg-black bg-opacity-20 p-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                 >
-                    <img src={'./assets/reply-arrow.svg'} class="h-full w-full opacity-20"></img>
+                    <img src={'./assets/translate.svg'} class="h-full w-full opacity-40"></img>
                 </button>
             </div>
         </div>
