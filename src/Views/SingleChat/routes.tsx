@@ -1,10 +1,15 @@
 import { Hono } from 'hono'
 import { LanguageSelectorDiv, SendMsgBarWithReply } from './Components/SendMsgBarWithReply'
 import { SendMsgBar } from './Components/SendMsgBar'
-import { EmojiPicker, EmojiPickerButton } from './Components/EmojiPicker'
+import { EmojiPickerButton } from './Components/EmojiPicker'
 import { CategoriesDataArray, ICategory } from '../../data/categories'
 import { Fragment } from 'hono/jsx/jsx-runtime'
-import { SettingsModal } from './Components/SettingsModal'
+import {
+    SettingsLoginSubModal,
+    SettingsLogoutSubModal,
+    SettingsModal,
+} from './Components/SettingsModal'
+import { getCookie } from 'hono/cookie'
 
 const singleChatRoutes = new Hono()
 
@@ -17,12 +22,37 @@ singleChatRoutes.get('/close-msg-edit', (c: any) => {
     return c.html(<SendMsgBar />)
 })
 
-singleChatRoutes.get('/open-settings', (c: any) => {
-    return c.html(<SettingsModal />)
+singleChatRoutes.get('/settings/open', async (c: any) => {
+    const sessionCookie = getCookie(c)
+    //TODO: real validate token function
+    return c.html(
+        <SettingsModal
+            validToken={sessionCookie.token == '123'}
+            loginToken={sessionCookie.token}
+            username={sessionCookie.username}
+        />
+    )
 })
 
-singleChatRoutes.get('/close-settings', (c: any) => {
+singleChatRoutes.get('/settings/close', (c: any) => {
     return c.html(<div id="settings-modal-container" class="hidden" />)
+})
+
+singleChatRoutes.get('/settings/login/open', (c: any) => {
+    return c.html(<SettingsLoginSubModal />)
+})
+
+singleChatRoutes.get('/settings/login/close', (c: any) => {
+    return c.html(<div id="settings-submodal-container" class="hidden" />)
+})
+
+singleChatRoutes.get('/settings/logout/open', (c: any) => {
+    const sessionCookie = getCookie(c)
+    return c.html(<SettingsLogoutSubModal username={sessionCookie.username} />)
+})
+
+singleChatRoutes.get('/settings/logout/close', (c: any) => {
+    return c.html(<div id="settings-submodal-container" class="hidden" />)
 })
 
 singleChatRoutes.get('/change-language', (c: any) => {

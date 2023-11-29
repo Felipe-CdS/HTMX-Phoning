@@ -18,6 +18,7 @@ function SingleChatView(props: { messages: any }) {
             <EmojiPicker />
             <div id="settings-modal-container" class="hidden" />
             {/*
+                <SettingsModal />
             <div id="emoji_root" x-show="emoji-open"></div>
              <MessageBubbleSingleRowComponent message={"aaaasdasdjkasdha"} time={"00:47"}/>
 				<MessageBubbleSingleRowComponent message={"aaaa"} time={"00:47"}/>

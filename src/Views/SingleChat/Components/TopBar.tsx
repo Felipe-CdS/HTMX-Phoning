@@ -9,7 +9,7 @@ function TopBar() {
                 <span class="whitespace-pre-line text-xl font-medium">팅🐱</span>
             </div>
             <button
-                hx-get="/single-chat/open-settings"
+                hx-get="/single-chat/settings/open"
                 hx-target="#settings-modal-container"
                 hx-swap="outerHTML"
                 class="align-items-center float-right flex text-lg text-blue-500"
